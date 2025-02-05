@@ -3,6 +3,9 @@ import React from 'react';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import "dotenv/config";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SingleTodo = ({ todo }) => {
   const router = useRouter();
@@ -19,7 +22,7 @@ const SingleTodo = ({ todo }) => {
     
     try {
       const changeStatusResponse = await fetch(
-        `http://localhost:3100/api/v1/todo/update-status/${todo._id}`,
+        `${baseUrl}/todo/update-status/${todo._id}`,
         {
           method: 'POST',
           headers: {
@@ -45,7 +48,7 @@ const SingleTodo = ({ todo }) => {
    
     try {
       const deleteTodoResponse = await fetch(
-        `http://localhost:3100/api/v1/todo/delete/${todo._id}`,
+        `${baseUrl}/todo/delete/${todo._id}`,
         {
           method: 'DELETE',
           headers: {
@@ -78,7 +81,7 @@ const SingleTodo = ({ todo }) => {
     
   try {
     const editTodoResponse = await fetch(
-      `http://localhost:3100/api/v1/todo/edit/${todo._id}`,{
+      `${baseUrl}/todo/edit/${todo._id}`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

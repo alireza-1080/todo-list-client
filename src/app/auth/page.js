@@ -2,12 +2,15 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
+import 'dotenv/config';
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Auth = async () => {
   const authToken = (await cookies()).get('auth-token')?.value;
 
   const authResponse = await fetch(
-    'http://localhost:3100/api/v1/auth/is-logged-in',
+    `${baseUrl}/auth/is-logged-in`,
     {
       method: 'POST',
       credentials: 'include',

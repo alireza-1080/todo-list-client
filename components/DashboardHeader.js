@@ -3,6 +3,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import toast from 'react-hot-toast';
+import "dotenv/config";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const DashboardHeader = ({ id, firstName, lastName }) => {
   const router = useRouter();
@@ -15,7 +18,7 @@ const DashboardHeader = ({ id, firstName, lastName }) => {
   const handleLogout = async () => {
     try {
       const logoutResponse = await fetch(
-        'http://localhost:3100/api/v1/auth/logout',
+        `${baseUrl}/auth/logout`,
         {
           method: 'POST',
           credentials: 'include',
@@ -44,7 +47,7 @@ const DashboardHeader = ({ id, firstName, lastName }) => {
 
     try {
       const createTodoResponse = await fetch(
-        'http://localhost:3100/api/v1/todo/create',
+        `${baseUrl}/todo/create`,
         {
           method: 'POST',
           headers: {

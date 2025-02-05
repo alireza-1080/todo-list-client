@@ -1,12 +1,16 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import "dotenv/config";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+console.log(baseUrl);
 
 const Home = async () => {
   const authToken = (await cookies()).get('auth-token')?.value;
   
   const authResponse = await fetch(
-    'http://localhost:3100/api/v1/auth/is-logged-in',
+    `${baseUrl}/auth/is-logged-in`,
     {
       method: 'POST',
       credentials: 'include',
@@ -16,8 +20,6 @@ const Home = async () => {
       },
     }
   );
-
-  const authResponseData = await authResponse.json();
 
   if (authResponse.status === 200) {
     return redirect('/dashboard');

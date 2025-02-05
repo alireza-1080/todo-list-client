@@ -3,36 +3,33 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import DashboardHeader from '../../../components/DashboardHeader';
 import AllTodos from '../../../components/AllTodos';
+import 'dotenv/config';
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Dashboard = async () => {
   const authToken = (await cookies()).get('auth-token')?.value;
 
-  const authResponse = await fetch(
-    'http://localhost:3100/api/v1/auth/is-logged-in',
-    {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-    }
-  );
+  const authResponse = await fetch(`${baseUrl}/auth/is-logged-in`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`,
+    },
+  });
 
   if (authResponse.status !== 200) {
     return redirect('/auth');
   }
 
-  const userInfoResponse = await fetch(
-    'http://localhost:3100/api/v1/auth/get-me',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-    }
-  );
+  const userInfoResponse = await fetch(`${baseUrl}/auth/get-me`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`,
+    },
+  });
 
   const userInfo = await userInfoResponse.json();
 

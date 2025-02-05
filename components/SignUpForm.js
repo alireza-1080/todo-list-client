@@ -2,6 +2,9 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import "dotenv/config";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -17,7 +20,7 @@ const SignUpForm = () => {
     
     try {
       const signUpResponse = await fetch(
-        'http://localhost:3100/api/v1/auth/register',
+        `${baseUrl}/auth/register`,
         {
           method: 'POST',
           headers: {

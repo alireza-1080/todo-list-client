@@ -2,6 +2,9 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import "dotenv/config";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SignInForm = () => {
   const router = useRouter();
@@ -13,7 +16,7 @@ const SignInForm = () => {
     e.preventDefault();
     try {
       const loginResponse = await fetch(
-        'http://localhost:3100/api/v1/auth/login',
+        `${baseUrl}/auth/login`,
         {
           method: 'POST',
           headers: {
