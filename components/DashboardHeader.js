@@ -1,10 +1,12 @@
 'use client';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import toast from 'react-hot-toast';
 
 const DashboardHeader = ({ id, firstName, lastName }) => {
+  const router = useRouter();
+
   const [isAddTodoOpen, setIsAddTodoOpen] = React.useState(false);
   const [newTodoTitle, setNewTodoTitle] = React.useState('');
 
@@ -28,14 +30,12 @@ const DashboardHeader = ({ id, firstName, lastName }) => {
       if (logoutResponse.status === 200) {
         toast.success(logoutResponseData.message);
 
-        setTimeout(() => {
-          redirect('/auth');
-        }, 2000);
+        router.push('/auth');
       } else {
-        console.log(logoutResponseData.message);
+        toast.error(logoutResponseData.message);
       }
     } catch (error) {
-      console.error('Fetch error:', error);
+      toast.error(error.message);
     }
   };
 
@@ -61,9 +61,8 @@ const DashboardHeader = ({ id, firstName, lastName }) => {
         setNewTodoTitle('');
         setIsAddTodoOpen(false);
 
-        setTimeout(() => {
-            redirect('/dashboard');
-        }, 2000);
+            router.push('/dashboard');
+
         } else {
         toast.error(createTodoResponseData.message);
         }
@@ -78,7 +77,7 @@ const DashboardHeader = ({ id, firstName, lastName }) => {
   }, [isAddTodoOpen]);
 
   return (
-    <div className="w-[600px] h-32 bg-white/20 backdrop-blur-3xl rounded-lg shadow-md fixed top-10 flex justify-between items-center px-4 transition">
+    <div className="w-[600px] h-32 bg-white/20 backdrop-blur-3xl rounded-lg shadow-md fixed top-10 flex justify-between items-center px-4 transition z-50">
       <div className="flex gap-1 grow">
         <h2 className="text-xl font-bold">{firstName}</h2>
         <h2 className="text-xl font-bold">{lastName}</h2>

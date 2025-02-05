@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 
 const Home = async () => {
   const authToken = (await cookies()).get('auth-token')?.value;
-  console.log(authToken);
+  
   const authResponse = await fetch(
     'http://localhost:3100/api/v1/auth/is-logged-in',
     {

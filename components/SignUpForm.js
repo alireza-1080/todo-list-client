@@ -14,7 +14,7 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(firstName, lastName, username, email, password);
+    
     try {
       const signUpResponse = await fetch(
         'http://localhost:3100/api/v1/auth/register',
