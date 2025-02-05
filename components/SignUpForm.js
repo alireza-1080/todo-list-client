@@ -23,6 +23,7 @@ const SignUpForm = () => {
           headers: {
             'content-type': 'application/json',
           },
+          credentials: 'include',
           body: JSON.stringify({
             firstName,
             lastName,
@@ -45,7 +46,7 @@ const SignUpForm = () => {
         setPassword('');
 
         setTimeout(() => {
-            router.push('/dashboard');
+          router.push('/dashboard');
         }, 2000);
       } else if (signUpResponse.status === 400) {
         toast.error(signUpResponseData.message);
