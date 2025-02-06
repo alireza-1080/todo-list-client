@@ -19,7 +19,8 @@ const SignUp = async () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authToken}`,
         },
-      }
+      },
+      { cache: 'no-store' }
     );
 
     if (authResponse.status === 200) {

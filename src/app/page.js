@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cache } from 'react';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import 'dotenv/config';
@@ -13,14 +13,18 @@ const Home = async () => {
   let authResponse;
 
   try {
-    authResponse = await fetch(`${baseUrl}/auth/is-logged-in`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
+    authResponse = await fetch(
+      `${baseUrl}/auth/is-logged-in`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
       },
-    });
+      { cache: 'no-store' }
+    );
   } catch (error) {
     console.error('Fetch error:', error);
   }

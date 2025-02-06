@@ -10,17 +10,14 @@ const SignIn = async () => {
   try {
     const authToken = (await cookies()).get('auth-token')?.value;
 
-    const authResponse = await fetch(
-      `${baseUrl}/auth/is-logged-in`,
-      {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`,
-        },
-      }
-    );
+    const authResponse = await fetch(`${baseUrl}/auth/is-logged-in`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    }, { cache: 'no-store' });
 
     if (authResponse.status === 200) {
       return redirect('/dashboard');

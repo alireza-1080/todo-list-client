@@ -20,7 +20,7 @@ const Dashboard = async () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authToken}`,
       },
-    });
+    }, { cache: 'no-store' });
   } catch (error) {
     return redirect('/auth');
   }
