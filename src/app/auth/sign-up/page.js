@@ -7,22 +7,26 @@ import 'dotenv/config';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SignUp = async () => {
-  const authToken = (await cookies()).get('auth-token')?.value;
+  try {
+    const authToken = (await cookies()).get('auth-token')?.value;
 
-  const authResponse = await fetch(
-    `${baseUrl}/auth/is-logged-in`,
-    {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
+    const authResponse = await fetch(
+      `${baseUrl}/auth/is-logged-in`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+
+    if (authResponse.status === 200) {
+      return redirect('/dashboard');
     }
-  );
-
-  if (authResponse.status === 200) {
-    return redirect('/dashboard');
+  } catch (error) {
+    console.error('Fetch error:', error);
   }
 
   return (
