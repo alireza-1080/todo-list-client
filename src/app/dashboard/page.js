@@ -10,26 +10,38 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const Dashboard = async () => {
   const authToken = (await cookies()).get('auth-token')?.value;
 
-  const authResponse = await fetch(`${baseUrl}/auth/is-logged-in`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
-    },
-  });
+  let authResponse;
+
+  try{
+    authResponse = await fetch(`${baseUrl}/auth/is-logged-in`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+  } catch (error) {
+    return redirect('/auth');
+  }
 
   if (authResponse.status !== 200) {
     return redirect('/auth');
   }
 
-  const userInfoResponse = await fetch(`${baseUrl}/auth/get-me`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
-    },
-  });
+  let userInfoResponse;
+
+  try{
+    userInfoResponse = await fetch(`${baseUrl}/auth/get-me`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+  } catch (error) {
+    return redirect('/auth');
+  }
 
   const userInfo = await userInfoResponse.json();
 
