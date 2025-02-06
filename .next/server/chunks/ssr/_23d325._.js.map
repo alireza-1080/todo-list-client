@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/maya7/OneDrive/Desktop/todo-list-client/src/app/page.js"],"sourcesContent":["import React from 'react';\nimport { redirect } from 'next/navigation';\nimport { cookies } from 'next/headers';\nimport \"dotenv/config\";\n\nconst baseUrl = process.env.NEXT_PUBLIC_BASE_URL;\n\nconst Home = async () => {\n  const authToken = (await cookies()).get('auth-token')?.value;\n  \n  const authResponse = await fetch(\n    `${baseUrl}/auth/is-logged-in`,\n    {\n      method: 'POST',\n      credentials: 'include',\n      headers: {\n        'Content-Type': 'application/json',\n        Authorization: `Bearer ${authToken}`,\n      },\n    }\n  );\n\n  const authResponseData = await authResponse.json();\n\n  if (authResponse.status === 200) {\n    return redirect('/dashboard');\n  }\n\n  if (authResponse.status === 400) {\n    return redirect('/auth');\n  }\n\n  return <div>Home</div>;\n};\n\nexport default Home;\n"],"names":[],"mappings":";;;;AAAA;AACA;AACA;;;;;;AADA;;;;;;AAIA,MAAM,UAAU,QAAQ,GAAG,CAAC,oBAAoB;AAEhD,MAAM,OAAO;IACX,MAAM,YAAY,CAAC,MAAM,CAAA,GAAA,+HAAA,CAAA,UAAO,AAAD,GAAG,EAAE,GAAG,CAAC,eAAe;IAEvD,MAAM,eAAe,MAAM,MACzB,GAAG,QAAQ,kBAAkB,CAAC,EAC9B;QACE,QAAQ;QACR,aAAa;QACb,SAAS;YACP,gBAAgB;YAChB,eAAe,CAAC,OAAO,EAAE,WAAW;QACtC;IACF;IAGF,MAAM,mBAAmB,MAAM,aAAa,IAAI;IAEhD,IAAI,aAAa,MAAM,KAAK,KAAK;QAC/B,OAAO,CAAA,GAAA,qLAAA,CAAA,WAAQ,AAAD,EAAE;IAClB;IAEA,IAAI,aAAa,MAAM,KAAK,KAAK;QAC/B,OAAO,CAAA,GAAA,qLAAA,CAAA,WAAQ,AAAD,EAAE;IAClB;IAEA,qBAAO,8OAAC;kBAAI;;;;;;AACd;uCAEe"}},
-    {"offset": {"line": 52, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-    {"offset": {"line": 63, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":""}},
-    {"offset": {"line": 63, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
